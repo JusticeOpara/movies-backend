@@ -30,7 +30,7 @@ const addToWatchlist = async (req, res) => {
     data: {
       userId: req.user.id,
       movieId,
-      status: status || "PLANNNED",
+      status: status || "PLANNED",
       rating,
       notes,
     },

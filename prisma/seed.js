@@ -83,3 +83,12 @@ const main = async ()=>{
  }).finally(async ()=>{
     await prisma.$disconnect()
  })
+
+
+
+//  {
+//    "movieId": "fd08ce38-6f37-4a96-9772-db952b8ad313",
+//     "status": "WATCHING",
+//     "rating": 2,
+//     "note": "I love this movie"
+// }

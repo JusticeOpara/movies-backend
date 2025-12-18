@@ -3,6 +3,7 @@ import { addToWatchlist , deleteFromWatchlist, updateWatchlistItem } from "../co
 import { authMiddleware } from "../middleware/authMiddleware.js"
 import {vaildateRequest} from "../middleware/vaildateRequest.js"
 
+
 const router = express.Router()
 
 router.use(authMiddleware)

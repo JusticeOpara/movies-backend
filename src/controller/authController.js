@@ -45,8 +45,6 @@ res.status(201).json({
 
 }
 
-
-
 const login = async (req, res) => {
 
 const { email, password } = req.body

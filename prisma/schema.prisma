@@ -40,6 +40,8 @@ createdAt DateTime @default(now())
 
 creator User @relation("MovieCreator", fields: [createdBy], references: [id], onDelete: Cascade)
 watchlistItems WatchlistItem[]
+
+ @@index([createdBy])
 }
 
 model WatchlistItem{
