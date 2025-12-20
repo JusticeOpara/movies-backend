@@ -1,6 +1,9 @@
 import express from 'express'
 import  { config } from "dotenv"
 import { connectDB, disconnectDB } from "./config/db.js"
+import swaggerUi from "swagger-ui-express";
+
+import swaggerSpec from "./docs/swagger.js";
 
 import movieRoute from "./routes/movieRoutes.js"
 import authRoute from "./routes/authRoutes.js"
@@ -13,13 +16,15 @@ connectDB()
 
 const app = express()
 
+
 //Body parsing middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended:true }))
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 //API ROUTES
-// app.route("/movies", movieRoute)
-// app.route("/auth", authRoute)
+
 app.use("/movies", movieRoute)
 app.use("/auth", authRoute)
 app.use("/watchlist", watchlistRoute)
@@ -27,6 +32,7 @@ app.use("/watchlist", watchlistRoute)
 const PORT  = process.env.PORT || 3001
 app.listen(PORT,()=>{
     console.log(`Server is running on port ${PORT}`)
+    console.log(`Swagger docs on http://localhost:${PORT}/api-docs`);
 })
 
 
