@@ -1,5 +1,39 @@
 import { prisma } from "../config/db.js";
 
+
+/**
+ * @desc    Get user's watchlist
+ * @route   GET /watchlist
+ * @access  Private
+ */
+const getUserWatchlist = async (req, res) => {
+  const watchlist = await prisma.watchlistItem.findMany({
+    where: {
+      userId: req.user.id,
+    },
+    include: {
+      movie: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  res.status(200).json({
+    status: "success",
+    results: watchlist.length,
+    data: {
+      watchlist,
+    },
+  });
+};
+
+
+/**
+ * @desc    Add movie to watchlist
+ * @route   POST /watchlist
+ * @access  Private
+ */
 const addToWatchlist = async (req, res) => {
   const { movieId, status, rating, notes } = req.body;
 
@@ -117,4 +151,4 @@ const updateWatchlistItem = async (req, res) => {
   })
 };
 
-export { addToWatchlist, deleteFromWatchlist, updateWatchlistItem };
+export { addToWatchlist, getUserWatchlist, deleteFromWatchlist, updateWatchlistItem };

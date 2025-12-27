@@ -1,28 +1,3 @@
-// import swaggerJSDoc from "swagger-jsdoc";
-
-// const swaggerOptions = {
-//   definition: {
-//     openapi: "3.0.0",
-//     info: {
-//       title: "Movie API",
-//       version: "1.0.0",
-//       description: "Movie backend API documentation",
-//     },
-//     servers: [
-//       {
-//         url: "http://localhost:3001",
-//       },
-//     ],
-//   },
-
-//   // 👇 Swagger will read comments from your route files
-//   apis: ["./src/routes/*.js"],
-// };
-
-// const swaggerSpec = swaggerJSDoc(swaggerOptions);
-
-// export default swaggerSpec;
-
 import swaggerJSDoc from "swagger-jsdoc";
 
 const swaggerOptions = {
@@ -45,12 +20,14 @@ const swaggerOptions = {
       schemas: {
         RegisterInput: {
           type: "object",
-          required: ["email", "password"],
+          required: ["name","email", "password"],
           properties: {
+            name:{ type: "string" },
             email: { type: "string", format: "email" },
             password: { type: "string", minLength: 6 },
           },
         },
+
         LoginInput: {
           type: "object",
           required: ["email", "password"],
@@ -59,6 +36,7 @@ const swaggerOptions = {
             password: { type: "string" },
           },
         },
+
         Movie: {
           type: "object",
           properties: {
@@ -68,10 +46,20 @@ const swaggerOptions = {
             releaseYear: { type: "number" },
           },
         },
+
         MovieInput: {
           type: "object",
           required: ["title", "overview", "releaseYear"],
           properties: {
+            title: { type: "string" },
+            overview: { type: "string" },
+            releaseYear: { type: "number" },
+          },
+        },
+        Watchlist: {
+          type: "object",
+          properties: {
+            id: { type: "string" },
             title: { type: "string" },
             overview: { type: "string" },
             releaseYear: { type: "number" },

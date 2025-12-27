@@ -1,27 +1,13 @@
-// import express from "express"
-// import { addToWatchlist , deleteFromWatchlist, updateWatchlistItem } from "../controller/watchlistController.js"
-// import { authMiddleware } from "../middleware/authMiddleware.js"
-// import {vaildateRequest} from "../middleware/vaildateRequest.js"
-
-
-// const router = express.Router()
-
-// router.use(authMiddleware)
-
-// router.post("/", vaildateRequest(addToWatchlist), addToWatchlist)
-// router.put("/:id", vaildateRequest(updateWatchlistItem), updateWatchlistItem)
-// router.delete("/:id", deleteFromWatchlist)
-
-// export default router
-
 import express from "express";
 import {
+  getUserWatchlist,
   addToWatchlist,
   deleteFromWatchlist,
   updateWatchlistItem,
 } from "../controller/watchlistController.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 import { vaildateRequest } from "../middleware/vaildateRequest.js";
+import { addToWatchlistSchema } from "../validators/watchlistValidator.js"
 
 const router = express.Router();
 
@@ -34,6 +20,41 @@ const router = express.Router();
 
 // 🔐 All watchlist routes are protected
 router.use(authMiddleware);
+
+/**
+ * @swagger
+ * /watchlist:
+ *   get:
+ *     summary: Get all user's watchlist items
+ *     tags: [Watchlist]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of watchlist items
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 results:
+ *                   type: integer
+ *                   example: 2
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     watchlist:
+ *                       type: array
+ *                       items:
+ *                         $ref: '#/components/schemas/Watchlist'
+ *       401:
+ *         description: Unauthorized
+ */
+router.get("/", getUserWatchlist);
+
 
 /**
  * @swagger
@@ -57,7 +78,7 @@ router.use(authMiddleware);
  *       401:
  *         description: Unauthorized
  */
-router.post("/", vaildateRequest(addToWatchlist), addToWatchlist);
+router.post("/", vaildateRequest(addToWatchlistSchema), addToWatchlist);
 
 /**
  * @swagger
@@ -69,7 +90,7 @@ router.post("/", vaildateRequest(addToWatchlist), addToWatchlist);
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: movieId
  *         required: true
  *         schema:
  *           type: string
@@ -89,7 +110,7 @@ router.post("/", vaildateRequest(addToWatchlist), addToWatchlist);
  *       404:
  *         description: Watchlist item not found
  */
-router.put("/:id", vaildateRequest(updateWatchlistItem), updateWatchlistItem);
+router.put("/:id", vaildateRequest(addToWatchlistSchema), updateWatchlistItem);
 
 /**
  * @swagger
@@ -101,7 +122,7 @@ router.put("/:id", vaildateRequest(updateWatchlistItem), updateWatchlistItem);
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: movieId
  *         required: true
  *         schema:
  *           type: string
