@@ -40,7 +40,7 @@ A RESTful API that would power a movie app. The client interface can be found [o
 
 - Fetch user’s watchlist
 
-✅ Validation & Security
+## ✅ Validation & Security
 
 Request validation using Zod
 
@@ -69,15 +69,15 @@ GET /api-docs
 
 It includes:
 
-Authentication endpoints
+- Authentication endpoints
 
-Movie endpoints
+- Movie endpoints
 
-Watchlist endpoints
+- Watchlist endpoints
 
-Request & response schemas
+- Request & response schemas
 
-JWT security support
+- JWT security support
 
 ## 🔑 Authentication
 
@@ -87,7 +87,9 @@ Authorization: Bearer <your_token_here>
 
 ## 🧾 Database Schema (Prisma)
 
-User
+### `User`
+
+```js
 model User {
 id String @id @default(uuid())
 name String
@@ -98,8 +100,11 @@ createdAt DateTime @default(now())
 movies Movie[] @relation("MovieCreator")
 watchlistItems WatchlistItem[]
 }
+```
 
-Movie
+### `Movie`
+
+```js
 model Movie {
 id String @id @default(uuid())
 title String
@@ -114,8 +119,11 @@ createdAt DateTime @default(now())
 creator User @relation("MovieCreator", fields: [createdBy], references: [id], onDelete: Cascade)
 watchlistItems WatchlistItem[]
 }
+```
 
-WatchlistItem
+### `WatchlistItem`
+
+```js
 model WatchlistItem {
 id String @id @default(uuid())
 userId String
@@ -131,59 +139,15 @@ movie Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
 
 @@unique([userId, movieId])
 }
+```
 
-WatchlistStatus Enum
+### `WatchlistStatus Enum`
+
+```js
 enum WatchlistStatus {
 PLANNED
 WATCHING
 COMPLETED
 DROPPED
 }
-
-## ⚙️ Setup & Installation
-
-## Setup environment variables
-
-cp .env.example .env
-
-## Run database migrations
-
-npx prisma migrate dev
-
-## Generate Prisma client
-
-npx prisma generate
-
-## Seed database
-
-npx prisma db seed
-
-## Start server
-
-npm run dev
-
-## 🧪 Example Endpoints
-
-Method Endpoint Description
-POST /auth/register Register user
-POST /auth/login Login user
-GET /movies List movies
-PUT /movies/:id Update movie
-POST /watchlist Add to watchlist
-GET /watchlist Get user watchlist
-PUT /watchlist/:id Update watchlist item
-DELETE /watchlist/:id Remove from watchlist
-
-## 🧠 Future Improvements
-
-Movie search & filtering
-
-Public movie ratings aggregation
-
-Soft deletes
-
-Admin roles
-
-Recommendation engine
-
-Caching with Redis
+```
