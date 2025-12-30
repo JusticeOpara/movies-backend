@@ -4,7 +4,7 @@ A RESTful API that would power a movie app. The client interface can be found [o
 
 ## [Live Demo](https://movies-backend-y0iq.onrender.com/)
 
-![alt text](/src/assets/movie-swagger.png)
+![alt text](/assets/Movie%20api.png)
 
 ## FEATURES
 
