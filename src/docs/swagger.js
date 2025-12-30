@@ -8,7 +8,7 @@ const swaggerOptions = {
       version: "1.0.0",
       description: "Movie backend API documentation",
     },
-    servers: [{ url: "http://localhost:3001" }],
+    servers: [{ url: "https://movies-backend-y0iq.onrender.com/" }],
     components: {
       securitySchemes: {
         bearerAuth: {
